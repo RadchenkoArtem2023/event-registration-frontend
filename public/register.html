@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <title>Реєстрація на подію</title>
+  </head>
+  <body>
+    <header>
+      <h1>Реєстрація на подію</h1>
+    </header>
+    <main>
+      <form id="registration-form">
+        <div>
+          <div>
+            <label for="fullName">Повне ім'я:</label>
+            <input type="text" id="fullName" name="fullName" required />
+          </div>
+          <div>
+            <label for="email">Електронна пошта:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div>
+            <label for="birthDate">Дата народження:</label>
+            <input type="date" id="birthDate" name="birthDate" required />
+          </div>
+          <div>
+            <label for="source">Звідки ви дізналися про цю подію?</label>
+            <div class="choice">
+              <div class="choice">
+                <input
+                  type="radio"
+                  id="socialMedia"
+                  name="source"
+                  value="Соціальні мережі"
+                  required />
+                <label for="socialMedia">Соціальні мережі</label>
+              </div>
+              <div class="choice">
+                <input
+                  type="radio"
+                  id="friends"
+                  name="source"
+                  value="Друзі"
+                  required />
+                <label for="friends">Друзі</label>
+              </div>
+              <div class="choice">
+                <input
+                  type="radio"
+                  id="selfDiscovery"
+                  name="source"
+                  value="Знайшов самостійно"
+                  required />
+                <label for="selfDiscovery">Знайшов самостійно</label>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit">Зареєструватися</button>
+        </div>
+      </form>
+    </main>
+    <footer>
+      <p>&copy; 2024 Реєстрація на події</p>
+    </footer>
+    <script src="../src/register.js"></script>
+  </body>
+</html>
