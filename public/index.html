@@ -11,12 +11,26 @@
       <h1>Дошка подій</h1>
     </header>
     <main>
-      <section id="event-board">
-      </section>
-        <div class="pagination"></div>
-    <div id="pageNumbers"></div> 
-  </div>
-      
+      <div class="sorting">
+        <label for="sort-by">Сортувати за:</label>
+        <select id="sort-by">
+          <option value="title">Заголовком</option>
+          <option value="date">Датою проведення</option>
+          <option value="organizer">Організатором</option>
+        </select>
+      </div>
+      <div class="sorting">
+        <label for="event-date">Виберіть дату події:</label>
+        <input
+          class="input-event-date"
+          type="date"
+          id="event-date"
+          name="event-date" />
+        <button class="save-date-btn" id="save-date-btn">Зберегти дату</button>
+      </div>
+      <section id="event-board"></section>
+      <div class="pagination"></div>
+      <div id="pageNumbers"></div>
     </main>
     <footer>
       <p>&copy; 2024 Реєстрація на події</p>

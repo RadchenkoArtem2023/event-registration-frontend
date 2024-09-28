@@ -4,21 +4,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let currentPage = 1;
 const eventsPerPage = 8;
+let allEvents = [];
 
 // Асинхронна функція для завантаження подій
 async function loadEvents() {
   try {
-    const response = await fetch("http://localhost:8080/api/events");
+    const response = await fetch(
+      "https://event-registration-backend-jomp.onrender.com/api/events"
+    );
     if (!response.ok) {
       throw new Error(`Помилка: ${response.statusText}`);
     }
     const events = await response.json();
-    displayEvents(events);
+    allEvents = events;
+    displayEvents(allEvents);
   } catch (error) {
     console.error("Сталася помилка при завантаженні подій:", error);
   }
 }
 
+// Функція для сортування подій
+function sortEvents(criteria) {
+  switch (criteria) {
+    case "title":
+      return allEvents.sort((a, b) => a.title.localeCompare(b.title));
+    case "date":
+      return allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+    case "organizer":
+      return allEvents.sort((a, b) => a.organizer.localeCompare(b.organizer));
+    default:
+      return allEvents;
+  }
+}
+
+// Обробник події для зміни сортування
+document.getElementById("sort-by").addEventListener("change", (event) => {
+  const sortedEvents = sortEvents(event.target.value);
+  displayEvents(sortedEvents);
+});
+
+// Обробник події для вибору дати
+document.getElementById("save-date-btn").addEventListener("click", () => {
+  const selectedDate = document.getElementById("event-date").value;
+
+  if (selectedDate) {
+    console.log(`Обрана дата: ${selectedDate}`);
+    filterEventsByDate(selectedDate);
+  } else {
+    alert("Будь ласка, виберіть дату.");
+  }
+});
+
+function filterEventsByDate(date) {
+  const filteredEvents = allEvents.filter((event) => {
+    const eventDate = new Date(event.date).toISOString().split("T")[0];
+    return eventDate === date;
+  });
+  displayEvents(filteredEvents);
+}
+
+// Функція для відображення подій
 function displayEvents(events) {
   const eventBoard = document.getElementById("event-board");
   eventBoard.innerHTML = "";
@@ -84,17 +129,17 @@ function setupPagination(totalEvents) {
     pageButton.textContent = i;
     pageButton.onclick = () => {
       currentPage = i;
-      loadEvents();
-      pageNumbers.appendChild(pageButton);
+      displayEvents(allEvents);
     };
+    pageNumbers.appendChild(pageButton);
   }
+}
 
-  // Функція для перенаправлення
-  function redirectTo(page, eventId) {
-    if (eventId) {
-      window.location.href = `${page}.html?eventId=${eventId}`;
-    } else {
-      alert("Помилка: Ідентифікатор події не знайдено.");
-    }
+// Функція для перенаправлення
+function redirectTo(page, eventId) {
+  if (eventId) {
+    window.location.href = `${page}.html?eventId=${eventId}`;
+  } else {
+    alert("Помилка: Ідентифікатор події не знайдено.");
   }
 }

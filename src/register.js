@@ -20,13 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/participants", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(participantData),
-      });
+      const response = await fetch(
+        "https://event-registration-backend-jomp.onrender.com/api/participants",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(participantData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Помилка: ${response.statusText}`);
